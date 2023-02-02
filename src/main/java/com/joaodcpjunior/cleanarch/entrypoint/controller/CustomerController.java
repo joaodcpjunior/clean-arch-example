@@ -2,6 +2,7 @@ package com.joaodcpjunior.cleanarch.entrypoint.controller;
 
 import com.joaodcpjunior.cleanarch.core.usecase.FindCustomerByIdUseCase;
 import com.joaodcpjunior.cleanarch.core.usecase.InsertCustomerUseCase;
+import com.joaodcpjunior.cleanarch.core.usecase.UpdateCustomerUseCase;
 import com.joaodcpjunior.cleanarch.entrypoint.controller.mapper.CustomerMapper;
 import com.joaodcpjunior.cleanarch.entrypoint.controller.request.CustomerRequest;
 import com.joaodcpjunior.cleanarch.entrypoint.controller.response.CustomerResponse;
@@ -17,10 +18,10 @@ public class CustomerController {
 
     @Autowired
     private InsertCustomerUseCase insertCustomerUseCase;
-
     @Autowired
     private FindCustomerByIdUseCase findCustomerByIdUseCase;
-
+    @Autowired
+    private UpdateCustomerUseCase updateCustomerUseCase;
     @Autowired
     private CustomerMapper customerMapper;
 
@@ -36,5 +37,13 @@ public class CustomerController {
         var customer = findCustomerByIdUseCase.find(id);
         var customerResponse = customerMapper.toCustomerResponse(customer);
         return ResponseEntity.ok().body(customerResponse);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> update(@PathVariable final String id, @Valid @RequestBody CustomerRequest customerRequest) {
+        var customer = customerMapper.toCustomer(customerRequest);
+        customer.setId(id);
+        updateCustomerUseCase.update(customer, customerRequest.zipCode());
+        return ResponseEntity.noContent().build();
     }
 }
