@@ -1,5 +1,6 @@
 package com.joaodcpjunior.cleanarch.entrypoint.controller;
 
+import com.joaodcpjunior.cleanarch.core.usecase.DeleteCustomerByIdUseCase;
 import com.joaodcpjunior.cleanarch.core.usecase.FindCustomerByIdUseCase;
 import com.joaodcpjunior.cleanarch.core.usecase.InsertCustomerUseCase;
 import com.joaodcpjunior.cleanarch.core.usecase.UpdateCustomerUseCase;
@@ -23,6 +24,8 @@ public class CustomerController {
     @Autowired
     private UpdateCustomerUseCase updateCustomerUseCase;
     @Autowired
+    private DeleteCustomerByIdUseCase deleteCustomerByIdUseCase;
+    @Autowired
     private CustomerMapper customerMapper;
 
     @PostMapping
@@ -44,6 +47,12 @@ public class CustomerController {
         var customer = customerMapper.toCustomer(customerRequest);
         customer.setId(id);
         updateCustomerUseCase.update(customer, customerRequest.zipCode());
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping("{/id}")
+    public ResponseEntity<Void> delete(@PathVariable String id) {
+        deleteCustomerByIdUseCase.delete(id);
         return ResponseEntity.noContent().build();
     }
 }
