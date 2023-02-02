@@ -4,7 +4,6 @@ import com.joaodcpjunior.cleanarch.core.dataprovider.FindCustomerById;
 import com.joaodcpjunior.cleanarch.core.domain.Customer;
 import com.joaodcpjunior.cleanarch.dataprovider.repository.CustomerRepository;
 import com.joaodcpjunior.cleanarch.dataprovider.repository.mapper.CustomerEntityMapper;
-import com.joaodcpjunior.cleanarch.entrypoint.controller.mapper.CustomerMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
