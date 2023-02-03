@@ -4,7 +4,6 @@ import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 
-@Data
 public record CustomerRequest(
         @NotBlank
         String name,
